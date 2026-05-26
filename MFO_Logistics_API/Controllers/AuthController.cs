@@ -1,6 +1,7 @@
 ﻿using MFO_Logistics_API.Models.Auth;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Serilog.Core;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -13,19 +14,26 @@ namespace MFO_Logistics_API.Controllers
     {
         private readonly IConfiguration _configuration;
 
-        public AuthController(IConfiguration configuration)
+        private readonly ILogger<ReportsController> _logger;
+
+        public AuthController(IConfiguration configuration , ILogger<ReportsController> logger )
         {
             _configuration = configuration;
+            _logger = logger;
         }
 
         [HttpPost("login")]
         public IActionResult Login(LoginRequest request)
         {
+
             if (request.Username != "admin" ||
                 request.Password != "123456")
             {
+                _logger.LogInformation("Yanlış Şifre Girildi. ");
                 return Unauthorized();
             }
+
+            _logger.LogInformation("Authorize verildi.");
 
             var claims = new[]
             {
@@ -46,9 +54,13 @@ namespace MFO_Logistics_API.Controllers
                 expires: DateTime.Now.AddMinutes(60),
                 signingCredentials: creds);
 
+            _logger.LogInformation($"Token : {token} ");
+
             return Ok(new
             {
+
                 token = new JwtSecurityTokenHandler().WriteToken(token)
+
             });
         }
 
