@@ -1,5 +1,7 @@
-﻿using MFO_Logistics_API.Models.Auth;
+﻿using MFO_Logistics_API.Data;
+using MFO_Logistics_API.Models.Auth;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Serilog.Core;
 using System.IdentityModel.Tokens.Jwt;
@@ -16,20 +18,27 @@ namespace MFO_Logistics_API.Controllers
 
         private readonly ILogger<ReportsController> _logger;
 
-        public AuthController(IConfiguration configuration , ILogger<ReportsController> logger )
+        private readonly AppDbContext _context;
+
+        public AuthController(IConfiguration configuration , ILogger<ReportsController> logger , AppDbContext context)
         {
             _configuration = configuration;
             _logger = logger;
+            _context = context;
         }
 
         [HttpPost("login")]
-        public IActionResult Login(LoginRequest request)
+        public async Task<IActionResult> Login(LoginRequest request)
         {
 
-            if (request.Username != "admin" ||
-                request.Password != "123456")
+            var user = await _context.Users
+    .FirstOrDefaultAsync(x =>
+        x.UserLogin == request.Username &&
+        x.UserPassword == request.Password &&
+        x.IsActive == 1);
+
+            if (user == null)
             {
-                _logger.LogInformation("Yanlış Şifre Girildi. ");
                 return Unauthorized();
             }
 

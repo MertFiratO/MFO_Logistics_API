@@ -62,6 +62,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseMiddleware<MFO_Logistics_API.Middlewares.ExceptionMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
