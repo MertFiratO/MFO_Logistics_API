@@ -10,15 +10,18 @@ namespace MFO_Logistics_API.Data
         {
         }
 
+        public DbSet<User> Users { get; set; }
         public DbSet<ReceiptReport> ReceiptReports { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ReceiptReport>()
-                .HasNoKey().ToView("V_ReceiptReport");
+            modelBuilder.Entity<User>().ToTable("tbl_User").HasKey(x => x.UserID);
+
+            modelBuilder.Entity<ReceiptReport>().HasNoKey().ToView("V_ReceiptReport");
 
             base.OnModelCreating(modelBuilder);
+
         }
     }
 }
