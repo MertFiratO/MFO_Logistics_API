@@ -11,14 +11,14 @@ namespace MFO_Logistics_API.Data
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<ReceiptReport> ReceiptReports { get; set; }
+        public DbSet<Receipt> ReceiptReports { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().ToTable("tbl_User").HasKey(x => x.UserID);
 
-            modelBuilder.Entity<ReceiptReport>().HasNoKey().ToView("V_ReceiptReport");
+            modelBuilder.Entity<Receipt>().ToTable("tbl_Receipt").HasKey(x => x.ReceiptId);
 
             base.OnModelCreating(modelBuilder);
 
