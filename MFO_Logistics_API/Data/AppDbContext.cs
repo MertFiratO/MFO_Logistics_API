@@ -1,4 +1,4 @@
-﻿using MFO_Logistics_API.Models;
+﻿using MFO_Logistics_API.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace MFO_Logistics_API.Data
@@ -11,7 +11,8 @@ namespace MFO_Logistics_API.Data
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Receipt> ReceiptReports { get; set; }
+        public DbSet<Receipt> Receipts { get; set; }
+        public DbSet<ReceiptSearch> ReceiptSearchs { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -19,6 +20,8 @@ namespace MFO_Logistics_API.Data
             modelBuilder.Entity<User>().ToTable("tbl_User").HasKey(x => x.UserID);
 
             modelBuilder.Entity<Receipt>().ToTable("tbl_Receipt").HasKey(x => x.ReceiptId);
+
+            modelBuilder.Entity<ReceiptSearch>().ToView("V_ReceiptSearch").HasNoKey();
 
             base.OnModelCreating(modelBuilder);
 

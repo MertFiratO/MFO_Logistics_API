@@ -16,11 +16,11 @@ namespace MFO_Logistics_API.Controllers
     {
         private readonly IConfiguration _configuration;
 
-        private readonly ILogger<ReportsController> _logger;
+        private readonly ILogger<ReceiptController> _logger;
 
         private readonly AppDbContext _context;
 
-        public AuthController(IConfiguration configuration , ILogger<ReportsController> logger , AppDbContext context)
+        public AuthController(IConfiguration configuration , ILogger<ReceiptController> logger , AppDbContext context)
         {
             _configuration = configuration;
             _logger = logger;

@@ -1,4 +1,4 @@
-﻿namespace MFO_Logistics_API.Models
+﻿namespace MFO_Logistics_API.Models.Entities
 {
     public class User
     {

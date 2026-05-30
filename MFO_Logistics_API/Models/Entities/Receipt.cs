@@ -1,4 +1,4 @@
-﻿namespace MFO_Logistics_API.Models
+﻿namespace MFO_Logistics_API.Models.Entities
 {
     public class Receipt
     {
@@ -9,8 +9,8 @@
         public DateTime CreateDate { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string ReceiptStatusID { get; set; }
-        public string CreateUserID { get; set; }
+        public int ReceiptStatusID { get; set; }
+        public int CreateUserID { get; set; }
         public int Status { get; set; }
     }
 }
